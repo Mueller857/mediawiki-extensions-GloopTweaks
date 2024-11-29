@@ -215,7 +215,7 @@ class GloopTweaksHooks {
 	 */
 	public static function onBeforePageDisplay( OutputPage &$out, Skin &$skin ) {
 		global $wgGloopTweaksAnalyticsID, $wgCloudflareDomain, $wgGloopTweaksCSP, $wgGloopTweaksCSPAnons, $wgSitename;
-		global $wgGloopTweaksEnableTheming, $wgGloopTweaksEnableLoadingFixedWidth, $wgGloopTweaksEnableSearchboxMetadata, $wgArticlePath, $wgCanonicalServer;
+		global $wgGloopTweaksEnableTheming, $wgGloopTweaksEnableLoadingFixedWidth, $wgGloopTweaksEnableStructuredData, $wgArticlePath, $wgCanonicalServer;
 
 		// For letting user JS import from additional sources, like the Wikimedia projects, they have a longer CSP than anons.
 		if ( $wgGloopTweaksCSP !== '' ) {
@@ -278,19 +278,12 @@ class GloopTweaksHooks {
 			$out->addMeta( 'og:title', $wgSitename );
 			$out->addMeta( 'og:type', 'website' );
 
-			/* Structured data for the Google Sitelinks search box. */
-			if ( $wgGloopTweaksEnableSearchboxMetadata ) {
-				$targetUrl = $wgCanonicalServer . str_replace( '$1', 'Special:Search', $wgArticlePath );
-				$targetUrl = wfAppendQuery( $targetUrl, 'search={search_term_string}' );
+			/* Structured data for Google etc */
+			if ( $wgGloopTweaksEnableStructuredData ) {
 				$structuredData = [
 					'@context'        => 'http://schema.org',
 					'@type'           => 'WebSite',
 					'url'             => $wgCanonicalServer,
-					'potentialAction' => [
-						'@type'       => 'SearchAction',
-						'target'      => $targetUrl,
-						'query-input' => 'required name=search_term_string',
-					],
 				];
 				$out->addHeadItem( 'StructuredData', '<script type="application/ld+json">' . json_encode( $structuredData ) . '</script>' );
 			}

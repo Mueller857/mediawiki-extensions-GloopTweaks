@@ -119,7 +119,7 @@
 		"EnableMobileVariant": {
 			"value": true
 		},
-		"EnableSearchboxMetadata": {
+		"EnableStructuredData": {
 			"value": true
 		},
 		"NoRobots": {
