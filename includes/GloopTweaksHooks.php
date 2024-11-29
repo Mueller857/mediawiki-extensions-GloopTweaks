@@ -283,6 +283,7 @@ class GloopTweaksHooks {
 				$structuredData = [
 					'@context'        => 'http://schema.org',
 					'@type'           => 'WebSite',
+					'name'            => $wgSitename,
 					'url'             => $wgCanonicalServer,
 				];
 				$out->addHeadItem( 'StructuredData', '<script type="application/ld+json">' . json_encode( $structuredData ) . '</script>' );
